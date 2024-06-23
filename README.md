@@ -1,3 +1,13 @@
+### eng
+# global-metadata.dat string modification tools
+For Android games exported from the Unity-il2cpp script backend, the strings that appear in the code will be compiled into the assets\bin\Data\Managed\Metadata\global-metadata.dat file. As part of the localization work, I simply created a tool to modify the strings in it.
+## References
+- [il2cppdumper](https://github.com/Perfare/Il2CppDumper)<br>
+The understanding of the contents of this file is learned from the source code of this tool. This tool itself is used to export class definitions from the compiled libil2cpp.so file and global-metadata.dat file. The export form includes those available for IDA. It is a very useful tool for renaming scripts, DLLs available in UABE and AssetStudio, etc.
+## Modify content
+In global-metadata.dat, the way to save the strings in the code is that there is a list in the header to store the offset, length and other information of each string, and then there is an area in the data area to directly store all the strings compactly. Strings are lists with headers, so they do not need to be terminated by \0.
+Because the number of strings remains unchanged before and after modification, modifications to the list are directly overwritten on the original area. The length of the data area may change. If the length of the data area is less than or equal to the original length after modification, it will be directly overwritten and written. If it is too long, it will be written to the end of the file.
+### japan
 # global-metadata.dat的部分字符串修改工具
 &emsp;&emsp;对于Unity-il2cpp脚本后端导出的Android游戏，代码中出现的字符串会编译进assets\bin\Data\Managed\Metadata\global-metadata.dat文件，作为汉化工作的一环，简单撸了一个工具对其中的字符串做修改。
 ## 参考资料
